@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Striver Dev | Кодер из Ямайки 🇯🇲</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: rgba(0, 0, 0, 0.75);
+            --bg-card: rgba(255, 215, 0, 0.95);
+            --text-primary: #FFD700;
+            --text-secondary: #00FF00;
+            --accent-red: #FF0000;
+            --accent-green: #00AA00;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        body.light-theme {
+            --bg-primary: rgba(255, 255, 255, 0.85);
+            --bg-card: rgba(255, 235, 59, 0.95);
+            --text-primary: #D32F2F;
+            --text-secondary: #388E3C;
+            --accent-red: #C62828;
+            --accent-green: #2E7D32;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            min-height: 100vh;
+            background: url('maboi.jpg') center/cover fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            z-index: 0;
+            transition: background 0.5s ease;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: var(--bg-card);
+            border-radius: 50%;
+            border: 3px solid var(--text-primary);
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(20deg);
+        }
+
+        .theme-toggle svg {
+            width: 30px;
+            height: 30px;
+            fill: var(--accent-red);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 4px solid var(--accent-red);
+            position: relative;
+            overflow: hidden;
+            animation: cardFloat 3s ease-in-out infinite;
+            max-width: 100%;
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            50%, 100% { left: 100%; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .flag {
+            display: flex;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .flag div {
+            flex: 1;
+        }
+
+        .flag .green { background: #00AA00; }
+        .flag .yellow { background: #FFD700; }
+        .flag .black { background: #000000; }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 700;
+            color: var(--accent-red);
+            text-shadow: 3px 3px 0 var(--accent-green),
+                         6px 6px 0 #000;
+            margin-bottom: 10px;
+            animation: textBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes textBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-shadow: 2px 2px 4px var(--shadow);
+            margin-bottom: 10px;
+        }
+
+        .emoji {
+            font-size: 2em;
+            animation: spin 4s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .description {
+            text-align: center;
+            font-size: 1.1em;
+            color: var(--accent-green);
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px var(--shadow);
+        }
+
+        .links {
+            display: grid;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-green));
+            padding: 18px 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .link-item:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .link-item:hover {
+            transform: translateX(10px) scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .link-icon {
+            width: 35px;
+            height: 35px;
+            margin-right: 15px;
+            fill: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .link-text {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 1.2em;
+            text-shadow: 2px 2px 4px var(--shadow);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+                text-shadow: 2px 2px 0 var(--accent-green),
+                             4px 4px 0 #000;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .description {
+                font-size: 1em;
+            }
+
+            .link-item {
+                padding: 15px 20px;
+                font-size: 1em;
+            }
+
+            .link-icon {
+                width: 30px;
+                height: 30px;
+                margin-right: 12px;
+            }
+
+            .theme-toggle {
+                width: 50px;
+                height: 50px;
+                top: 15px;
+                right: 15px;
+            }
+
+            .theme-toggle svg {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .link-item {
+                padding: 12px 15px;
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas-container">
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
+        <svg viewBox="0 0 24 24">
+            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+        </svg>
+    </button>
+
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="flag">
+                    <div class="green"></div>
+                    <div class="yellow"></div>
+                    <div class="black"></div>
+                </div>
+                <h1>Striver Dev</h1>
+                <div class="subtitle">Dev Кодер из Ямайки <span class="emoji">🇯🇲</span></div>
+            </div>
+
+            <div class="description">
+                💻 Делаю код с прикалюхами! 🔥<br>
+                One Love, One Code! ☮️
+            </div>
+
+            <div class="links">
+                <a href="https://t.me/striver_dp" class="link-item" target="_blank" rel="noopener">
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                    </svg>
+                    <span class="link-text">Основа ТГК</span>
+                </a>
+
+                <a href="https://t.me/reportstriver" class="link-item" target="_blank" rel="noopener">
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    <span class="link-text">LevelUp канал</span>
+                </a>
+
+                <a href="https://t.me/StriverDev" class="link-item" target="_blank" rel="noopener">
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                    <span class="link-text">Кодинг канал</span>
+                </a>
+
+                <a href="https://www.donationalerts.com/r/StriverDev" class="link-item" target="_blank" rel="noopener">
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
+                    <span class="link-text">Донат на кофе ☕</span>
+                </a>
+            </div>
+
+            <div class="footer">
+                🌴 Irie Vibes Only! 🌴
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Canvas Animation
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#FFD700', '#00FF00', '#FF0000', '#000000'];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.speedY = Math.random() * 2 - 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) {
+                    this.speedX *= -1;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.speedY *= -1;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-theme');
+
+            // Создаем эффект взрыва частиц при смене темы
+            for (let i = 0; i < 20; i++) {
+                particles.push(new Particle());
+            }
+
+            // Удаляем лишние частицы через 2 секунды
+            setTimeout(() => {
+                particles.splice(50, 20);
+            }, 2000);
+        });
+
+        // Клик эффект
+        document.addEventListener('click', (e) => {
+            const colors = ['#FFD700', '#00FF00', '#FF0000'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            for (let i = 0; i < 5; i++) {
+                const particle = new Particle();
+                particle.x = e.clientX;
+                particle.y = e.clientY;
+                particle.color = color;
+                particle.size = Math.random() * 5 + 2;
+                particle.speedX = (Math.random() - 0.5) * 8;
+                particle.speedY = (Math.random() - 0.5) * 8;
+                particles.push(particle);
+
+                setTimeout(() => {
+                    const index = particles.indexOf(particle);
+                    if (index > -1) particles.splice(index, 1);
+                }, 1000);
+            }
+        });
+
+        // Конфетти при загрузке
+        window.addEventListener('load', () => {
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const particle = new Particle();
+                    particle.y = -10;
+                    particle.speedY = Math.random() * 3 + 2;
+                    particles.push(particle);
+                }, i * 30);
+            }
+        });
+    </script>
+</body>
+</html>
