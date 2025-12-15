@@ -23,16 +23,6 @@
             --shadow: rgba(0, 0, 0, 0.5);
         }
 
-        body.light-theme {
-            --bg-primary: rgba(255, 255, 255, 0.85);
-            --bg-card: rgba(255, 235, 59, 0.95);
-            --text-primary: #D32F2F;
-            --text-secondary: #388E3C;
-            --accent-red: #C62828;
-            --accent-green: #2E7D32;
-            --shadow: rgba(0, 0, 0, 0.2);
-        }
-
         body {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
             min-height: 100vh;
@@ -66,33 +56,6 @@
             align-items: center;
         }
 
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: var(--bg-card);
-            border-radius: 50%;
-            border: 3px solid var(--text-primary);
-            cursor: pointer;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px var(--shadow);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(20deg);
-        }
-
-        .theme-toggle svg {
-            width: 30px;
-            height: 30px;
-            fill: var(--accent-red);
-        }
 
         .card {
             background: var(--bg-card);
@@ -318,18 +281,6 @@
                 height: 30px;
                 margin-right: 12px;
             }
-
-            .theme-toggle {
-                width: 50px;
-                height: 50px;
-                top: 15px;
-                right: 15px;
-            }
-
-            .theme-toggle svg {
-                width: 25px;
-                height: 25px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -356,12 +307,6 @@
     <div class="canvas-container">
         <canvas id="canvas"></canvas>
     </div>
-
-    <button class="theme-toggle" id="themeToggle" aria-label="Сменить тему">
-        <svg viewBox="0 0 24 24">
-            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
-        </svg>
-    </button>
 
     <div class="container">
         <div class="card">
@@ -480,24 +425,6 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-        });
-
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('light-theme');
-
-            // Создаем эффект взрыва частиц при смене темы
-            for (let i = 0; i < 20; i++) {
-                particles.push(new Particle());
-            }
-
-            // Удаляем лишние частицы через 2 секунды
-            setTimeout(() => {
-                particles.splice(50, 20);
-            }, 2000);
         });
 
         // Клик эффект
